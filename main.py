@@ -100,7 +100,6 @@ def start():
     server.listen()
     print(f"[LISTEN] Listening on {server.getsockname()}")
     while on:
-        cscreen()
         conn, addr=server.accept()
         thread=threading.Thread(target=handleClient, args=(conn, addr))
         thread.start()
@@ -110,4 +109,5 @@ def start():
 
 
 print("[STARTING] Starting Server...")
+cscreen()
 start()
