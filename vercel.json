@@ -11,7 +11,7 @@
              "dest": "api/mailMe.py"
          }
      ],
-     "functions": [
+     "functions": 
         {
             "api/mailMe.py": {
                 "includeFiles": [
@@ -20,5 +20,4 @@
                 ]
             }
         }
-     ]
  }
