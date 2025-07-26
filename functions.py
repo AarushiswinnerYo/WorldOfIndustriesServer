@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 port_number =1234
 msg = MIMEMultipart()
 
-cluster="mongodb://192.168.29.178/?directConnection=true"
+cluster="mongodb://resources-lookup.gl.at.ply.gg:33966/?directConnection=true"
 client=MongoClient(cluster)
 db=client.Users
 profs=db.names
