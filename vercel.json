@@ -10,5 +10,15 @@
              "src": "/(.*)",
              "dest": "api/mailMe.py"
          }
+     ],
+     "functions": [
+        {
+            "api/mailMe.py": {
+                "includeFiles": [
+                    "api/verCodes.py",
+                    "api/verEmails.py"
+                ]
+            }
+        }
      ]
  }
