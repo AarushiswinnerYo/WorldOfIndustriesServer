@@ -2,6 +2,12 @@ import os
 import ast
 import pickle
 from pymongo import MongoClient
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+port_number =1234
+msg = MIMEMultipart()
+
 cluster="mongodb://192.168.29.178/?directConnection=true"
 client=MongoClient(cluster)
 db=client.Users

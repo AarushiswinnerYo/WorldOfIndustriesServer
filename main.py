@@ -2,6 +2,7 @@ import socket
 import threading
 import os
 import functions
+import mailMe
 HEADER=64
 PORT=5555
 SERVER="0.0.0.0"
@@ -21,14 +22,14 @@ def cscreen():
         print(f"\033[32m{i}\033[0m")
 
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind(ADDR)
 
 def handleClient(conn, addr):
     global off
     connected=True
+    cscreen()
     while connected:
-        cscreen()
         msg_len=conn.recv(HEADER).decode(FORMAT)
         if msg_len:
             msg_len=int(msg_len)
@@ -37,8 +38,15 @@ def handleClient(conn, addr):
             if x[0]=="signup":
                 signRes=functions.signUp(x[1],x[2])
                 if signRes=="Done!":
-                    conn.send("User signed up successfully".encode(FORMAT))
-                    print(f"\033[32mUser:-{x[1]} up successfully\033[0m")
+                    try:
+                        if x[3]=="new":
+                            conn.send("User signed up successfully new-a".encode(FORMAT))
+                            print(f"\033[32mUser:-{x[1]} up successfully\033[0m")
+                    except:
+                        conn.send("User signed up successfully".encode(FORMAT))
+                        print(f"\033[32mUser:-{x[1]} up successfully\033[0m")
+                    else:
+                        pass
                 else:
                     conn.send("Exists".encode(FORMAT))
                     connected=False
@@ -109,5 +117,7 @@ def start():
 
 
 print("[STARTING] Starting Server...")
-cscreen()
+cscreen()   
+t2=threading.Thread(target=mailMe.main)
+t2.start()
 start()

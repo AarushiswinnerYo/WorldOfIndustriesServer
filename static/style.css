@@ -1,0 +1,79 @@
+body{
+  @import: url(https://fonts.googleapis.com/css?family=Roboto);
+  font-family: 'Roboto', sans-serif;
+background: linear-gradient(to bottom,  #020202 50%, #020202 55%, #190031 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: #fff;
+  text-transform:capitalize;
+  height: auto;
+        background-attachment: fixed;
+        background-size: cover;
+        font-size: 20px;
+    }
+    .custom-input {
+          width: 250;
+          padding: 12.5px;
+          padding-left: 20px;
+          border-radius: 25px;
+          background-image: linear-gradient(to right, #5322c5 50%, #da20ff 100%);
+          border: 0px;
+          font-size: 20px;
+          color: #fff;
+          margin: 10px;
+          text-align: center;
+    }
+    .custom-input:focus{
+        outline: none;
+    }
+    .custom-input:-webkit-autofill{
+        -webkit-text-fill-color: linear-gradient(to right, #5322c5 50%, #da20ff 100%);
+        -webkit-box-shadow:linear-gradient(to right, #5322c5 50%, #da20ff 100%);
+    }
+    .custom-but button{
+      transition: .5s ease;
+      background-color: #020202;
+      background-image: none;
+      font-style: bold;
+      padding: 15px;
+      border: 0px;
+      color: white;
+      font-size: 16px;
+      border-radius: 25px;
+      text-transform: uppercase;
+    }
+    .custom-but button:hover{
+      background-color: #181818;
+      font-size: 21px;
+    }
+    .page{
+    transition: .5s ease;
+  position: relative;
+  width: fit-content;
+  height: 250px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 7.5px;
+  align-items: center;
+}
+    .pageCent{
+        display: flex;
+  flex-direction: column;
+  align-items: center;
+    }
+  .username{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    padding-top: 5px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: #0e0e0e;
+    border-radius: 15px;
+  }
