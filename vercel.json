@@ -16,7 +16,10 @@
             "api/mailMe.py": {
                 "includeFiles": [
                     "api/verCodes.py",
-                    "api/verEmails.py"
+                    "api/verEmails.py",
+                    "api/templates/main.html",
+                    "api/templates/veri.html",
+                    "api/templates/veried.html"
                 ]
             }
         }
