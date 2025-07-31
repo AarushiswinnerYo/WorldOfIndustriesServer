@@ -3,7 +3,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
+import time
 import verCodes
+from threading import Thread
 from pymongo import MongoClient
 import verEmails
 
@@ -98,6 +100,14 @@ This is your verification generated code: {code}"""
             return "Code was wrong"
     app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
 
+def j():
+    while True:
+        t=names.find_one({"_id":"up"})
+        print(t["e"])
+        time.sleep(20)
+
 if __name__ == "__main__":
+    t1=Thread(target=j)
+    t1.start()
     main()
         
