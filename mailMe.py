@@ -87,10 +87,11 @@ This is your verification generated code: {code}"""
             f=verEmails.mailIDs
             mail=f[user]
             send(mail, user, "codeVerd")
+            user=user.title()
             return render_template("veried.html", user=user)
         else:
             return "Code was wrong"
-    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000, ssl_context=('cert.pem', 'key.pem'))
 
 if __name__ == "__main__":
     main()
