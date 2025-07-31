@@ -90,7 +90,7 @@ This is your verification generated code: {code}"""
             return render_template("veried.html", user=user)
         else:
             return "Code was wrong"
-    app.run(debug=True, use_reloader=False, port=5025)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
 
 if __name__ == "__main__":
     main()
