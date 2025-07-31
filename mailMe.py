@@ -4,8 +4,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import verCodes
+from pymongo import MongoClient
 import verEmails
 
+cluster="mongodb+srv://W:a@woiserver.38gfy.mongodb.net/"
+client=MongoClient(cluster)
+db=client.Users
+names=db.mails
 app = Flask(__name__)
 
 def main():
@@ -57,8 +62,8 @@ This is your verification generated code: {code}"""
             password = "mddq wpsj eiyd olvs"
             e=verEmails.mailIDs
             e[username]=senderAdd
-            with open("verEmails.py", "w") as writeVer:
-                writeVer.write(f"mailIDs={e}")
+            c={f"{username}":senderAdd}
+            names.insert_one(c)
             send_email(subject, body, sender, recipients, password, "reg")
         elif typ=="codeVerd":
             subject = "Email Verified"
@@ -84,7 +89,7 @@ This is your verification generated code: {code}"""
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            f=verEmails.mailIDs
+            f=names.find_one({f"{user}": {'$exists': True}})
             mail=f[user]
             send(mail, user, "codeVerd")
             user=user.title()
