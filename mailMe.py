@@ -8,8 +8,9 @@ import verCodes
 from threading import Thread
 from pymongo import MongoClient
 import verEmails
+import os
 
-cluster="mongodb+srv://W:a@woiserver.38gfy.mongodb.net/"
+cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 db=client.Users
 names=db.mails
