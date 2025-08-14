@@ -60,9 +60,9 @@ def main():
             subject = "Email Verification"
             body = f"""Hello, {username.title()}!
 This is your verification generated code: {code}"""
-            sender = "worldofindustriessup@gmail.com"
+            sender = os.getenv("EMAIL")
             recipients = [senderAdd]
-            password = "mddq wpsj eiyd olvs"
+            password = os.getenv("EM_PASS")
             e=verEmails.mailIDs
             e[username]=senderAdd
             c={f"{username}":senderAdd}
