@@ -33,8 +33,11 @@ def main():
         user=request.form['user']
         user=user.lower()
         mail = mail.lower()
-        send(mail, user, "reg")
-        return redirect(url_for("veri", user=user))
+        e=send(mail, user, "reg")
+        if e=="Exist":
+            return "User already exists"
+        else:
+            return redirect(url_for("veri", user=user))
 
     def send(senderAdd, username, typ):
         def send_email(subject, body, sender, recipients, password, typ):
@@ -57,22 +60,25 @@ def main():
                     smtp_server.sendmail(sender, recipients, msg.as_string())
             print("Message sent!")
         if typ=="reg":
-            code=random.randint(100000,999999)
-            x=verCodes.verPend
-            x[username]=code
-            with open("verCodes.py", "w") as writeVer:
-                writeVer.write(f"verPend={x}")
-            subject = "Email Verification"
-            body = f"""Hello, {username.title()}!
-This is your verification generated code: {code}"""
-            sender = os.getenv("EMAIL")
-            recipients = [senderAdd]
-            password = os.getenv("EM_PASS")
-            e=verEmails.mailIDs
-            e[username]=senderAdd
-            c={f"{username}":senderAdd}
-            names.insert_one(c)
-            send_email(subject, body, sender, recipients, password, "reg")
+            if names.find_one({f"{username}": {'$exists': True}}):
+                return "Exist"
+            else:
+                code=random.randint(100000,999999)
+                x=verCodes.verPend
+                x[username]=code
+                with open("verCodes.py", "w") as writeVer:
+                        writeVer.write(f"verPend={x}")
+                subject = "Email Verification"
+                body = f"""Hello, {username.title()}!
+    This is your verification generated code: {code}"""
+                sender = os.getenv("EMAIL")
+                recipients = [senderAdd]
+                password = os.getenv("EM_PASS")
+                e=verEmails.mailIDs
+                e[username]=senderAdd
+                c={f"{username}":senderAdd}
+                names.insert_one(c)
+                send_email(subject, body, sender, recipients, password, "reg")
         elif typ=="codeVerd":
             subject = "Email Verified"
             with open("mail.html","r") as readTemp:
