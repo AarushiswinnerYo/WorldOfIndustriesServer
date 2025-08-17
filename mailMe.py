@@ -18,11 +18,16 @@ app = Flask(__name__)
 
 def main():
     global app
-    @app.route('/')
-    def my_form():
-        return render_template('main.html')
 
-    @app.route('/', methods=['POST'])
+    @app.route('/')
+    def home():
+        return render_template('home.html')
+
+    @app.route('/register')
+    def my_form():
+        return render_template('register.html')
+
+    @app.route('/register', methods=['POST'])
     def my_form_post():
         mail = request.form['email']
         user=request.form['user']
