@@ -35,7 +35,7 @@ def main():
         mail = mail.lower()
         e=send(mail, user, "reg")
         if e=="Exist":
-            return "User already exists"
+            return render_template("registerAgain.html", user=user)
         else:
             return redirect(url_for("veri", user=user))
 
