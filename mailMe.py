@@ -114,6 +114,7 @@ def main():
             d=names.find_one({f"{username}": {'$exists': True}})
             d=f.decrypt(d).decode('utf-8')
             mail=d[user]
+            mail=f.decrypt(mail).decode('utf-8')
             send(mail, user, "codeVerd")
             user=user.title()
             return render_template("veried.html", user=user)
