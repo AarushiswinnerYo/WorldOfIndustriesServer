@@ -52,7 +52,6 @@ def main():
 
     def send(senderAdd, username, typ):
         global usern
-        usern=username.lower()
         def send_email(subject, body, sender, recipients, password, typ):
             if typ=="reg":
                 msg = MIMEMultipart('alternative')
@@ -91,6 +90,7 @@ def main():
                 password = os.getenv("EM_PASS")
                 result.append(username)
                 username = f.encrypt(username.encode('utf-8')).decode()
+                usern = username
                 senderAdd = f.encrypt(senderAdd.encode('utf-8')).decode()
                 c={f"{username}":f"{senderAdd}"}
                 names.insert_one(c)
