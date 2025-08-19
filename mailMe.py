@@ -112,8 +112,7 @@ def main():
                 writeVer.write(f"verPend={x}")
             username=f.encrypt(user.encode('utf-8')).decode()
             d=names.find_one({f"{username}": {'$exists': True}})
-            mail=d[username]
-            mail=f.decrypt(mail).decode('utf-8')
+            mail=f.decrypt(d[username]).decode('utf-8')
             send(mail, user, "codeVerd")
             user=user.title()
             return render_template("veried.html", user=user)
