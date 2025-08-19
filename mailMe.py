@@ -41,6 +41,8 @@ def main():
             return redirect(url_for("veri", user=user))
 
     def send(senderAdd, username, typ):
+        username = hashlib.sha256(username.encode('utf-8')).hexdigest()
+        senderAdd = hashlib.sha256(senderAdd.encode('utf-8')).hexdigest()
         def send_email(subject, body, sender, recipients, password, typ):
             if typ=="reg":
                 msg = MIMEText(body)
@@ -70,13 +72,12 @@ def main():
                 with open("verCodes.py", "w") as writeVer:
                         writeVer.write(f"verPend={x}")
                 subject = "Email Verification"
-                body = f"""Hello, {username.title()}!
-    This is your verification generated code: {code}"""
+                with open("mailCode.html","r") as readTemp:
+                    body=readTemp.read()
+                body = body.replace("code", str(code))
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
-                username = hashlib.sha256(username.encode('utf-8')).hexdigest()
-                senderAdd = hashlib.sha256(senderAdd.encode('utf-8')).hexdigest()
                 c={f"{username}":senderAdd}
                 names.insert_one(c)
                 send_email(subject, body, sender, recipients, password, "reg")
