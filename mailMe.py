@@ -65,7 +65,7 @@ def main():
             print("Message sent!")
         if typ=="reg":
             usernameFind = username.encode('utf-8')
-            usernameFind = f.encrypt(usernameFind)
+            usernameFind = f.encrypt(usernameFind).decode()
             if names.find_one({f"{usernameFind}": {'$exists': True}}):
                 return "Exist"
             else:
