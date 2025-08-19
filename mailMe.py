@@ -19,13 +19,19 @@ names=db.mails
 result=[]
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
-for x in names.find():
-    del x['_id']
-    for e in x.keys():
-        if e!="e":
-            result.append(f.decrypt(e.encode('utf-8')).decode())
-        else:
-            pass
+def refreshList():
+    global result
+    while True:
+        r=[]
+        for x in names.find():
+            del x['_id']
+            for e in x.keys():
+                if e!="e":
+                    r.append(f.decrypt(e.encode('utf-8')).decode())
+                else:
+                    pass
+        result=r
+        time.sleep(1)
 
 def main():
     global app
@@ -78,7 +84,7 @@ def main():
             else:
                 code=random.randint(100000,999999)
                 x=verCodes.verPend
-                x[username]=code
+                x[username.lower()]=code
                 with open("verCodes.py", "w") as writeVer:
                         writeVer.write(f"verPend={x}")
                 subject = "Email Verification"
@@ -137,5 +143,7 @@ def j():
 if __name__ == "__main__":
     t1=Thread(target=j)
     t1.start()
+    t2=Thread(target=refreshList)
+    t2.start()
     main()
         
