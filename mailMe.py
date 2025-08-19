@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 import random
 import time
 import verCodes
+from cryptography.fernet import Fernet
 import hashlib
 from threading import Thread
 from pymongo import MongoClient
@@ -16,6 +17,7 @@ client=MongoClient(cluster)
 db=client.Users
 names=db.mails
 app = Flask(__name__)
+f=Fernet(os.getenv("FERNET_KEY").encode())
 
 def main():
     global app
@@ -41,8 +43,6 @@ def main():
             return redirect(url_for("veri", user=user))
 
     def send(senderAdd, username, typ):
-        username = hashlib.sha256(username.encode('utf-8')).hexdigest()
-        senderAdd = hashlib.sha256(senderAdd.encode('utf-8')).hexdigest()
         def send_email(subject, body, sender, recipients, password, typ):
             if typ=="reg":
                 msg = MIMEText(body)
@@ -63,7 +63,9 @@ def main():
                     smtp_server.sendmail(sender, recipients, msg.as_string())
             print("Message sent!")
         if typ=="reg":
-            if names.find_one({f"{username}": {'$exists': True}}):
+            usernameFind = username.encode('utf-8')
+            usernameFind = f.encrypt(usernameFind)
+            if names.find_one({f"{usernameFind}": {'$exists': True}}):
                 return "Exist"
             else:
                 code=random.randint(100000,999999)
@@ -78,6 +80,8 @@ def main():
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
+                username = f.encrypt(username.encode('utf-8'))
+                senderAdd = f.encrypt(senderAdd.encode('utf-8'))
                 c={f"{username}":senderAdd}
                 names.insert_one(c)
                 send_email(subject, body, sender, recipients, password, "reg")
