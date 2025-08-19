@@ -45,10 +45,11 @@ def main():
     def send(senderAdd, username, typ):
         def send_email(subject, body, sender, recipients, password, typ):
             if typ=="reg":
-                msg = MIMEText(body)
+                msg = MIMEMultipart('alternative')
                 msg['Subject'] = subject
                 msg['From'] = sender
                 msg['To'] = ', '.join(recipients)
+                msg.attach(MIMEText(body, "html"))
                 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
                     smtp_server.login(sender, password)
                     smtp_server.sendmail(sender, recipients, msg.as_string())
@@ -76,7 +77,7 @@ def main():
                 subject = "Email Verification"
                 with open("mailCode.html","r") as readTemp:
                     body=readTemp.read()
-                body = body.replace("code", str(code))
+                body = body.replace("verCode", str(code))
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
