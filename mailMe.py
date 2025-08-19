@@ -51,8 +51,8 @@ def main():
             return redirect(url_for("veri", user=user))
 
     def send(senderAdd, username, typ):
+        global username
         def send_email(subject, body, sender, recipients, password, typ):
-            global username
             if typ=="reg":
                 msg = MIMEMultipart('alternative')
                 msg['Subject'] = subject
