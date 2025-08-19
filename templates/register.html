@@ -13,19 +13,40 @@
 </head>
 
 <style>
-    
+    body{
+        height: 95%;
+        display: flex;
+        justify-content: center;
+        min-height: 75vh;
+        align-items: center;
+    }
+    .textBox{
+        padding: 2vh;
+        border-radius: 15px;
+        border: 2px solid white;
+        text-align: center;
+        background-color: black;
+    }
+    .custom-but button:hover{
+        transition: .3s ease;
+        border-radius: 15px;
+        font-size: 16px;
+        background-color: #0a0a0a;
+    }
 </style>
 <body>
 <form method="POST">
 <div class="pageCent">
     <div class="page">
     <img src="https://aarushiswinner.qzz.io/woiLogo.png" style="height: 150px; margin-bottom: 15px; border-radius: 15px;">
-    Email ID:
+    <div class="textBox">
+    Email ID: &emsp13;
     <input name="email" class="custom-input" required>
-    <br>Username:
+    <br>Username: 
     <input name="user" class="custom-input" required><br>
     <div class="custom-but">
-    <button type="submit">Pre-Register!</button>
+    <button type="submit" style="margin-top: 25px; border: 2px solid white; border-radius: 15px;">Pre-Register!</button>
+    </div>
     </div>
     </div>
     </div>

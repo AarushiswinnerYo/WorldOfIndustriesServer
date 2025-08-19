@@ -2,12 +2,13 @@
 <head>
     <title>World Of Industries Registration!</title>
     <link rel="stylesheet" href="https://aarushiswinner.qzz.io/woiStyle.css">
-    <link rel="icon" href="https://aarushiswinner.qzz.io/woiLogo.png">
     <meta property="og:title" content="World Of Industries Registration">
+    <link rel="icon" href="https://aarushiswinner.qzz.io/woiLogo.png">
     <meta property="og:url" content="https://worldofindustries.qzz.io/">
     <meta property="og:image" content="https://aarushiswinner.qzz.io/woiLogo.png">
     <meta property="og:image:width" content="500">
     <meta property="og:image:height" content="500">
+    <meta property="og:description" content="Register for the World Of Industries game and embark on an epic journey!">
 </head>
 
 <style>
@@ -16,7 +17,7 @@
         height: 95%;
         display: flex;
         justify-content: center;
-        min-height: 10;
+        min-height: 75vh;
         align-items: center;
     }
     .textBox{
@@ -35,15 +36,24 @@
 </style>
 
 <body>
+<form method="POST">
 <div class="pageCent">
     <div class="page">
+    <label for="exists" style="color: #ff1616; border: 2px solid #ff1616; padding: 10px; margin: 5px; border-radius: 15px; background-color: #0f0f0f;">Verification code was wrong!</label>
     <img src="https://aarushiswinner.qzz.io/woiLogo.png" style="height: 150px; margin-bottom: 15px; border-radius: 15px;">
     <div class="textBox">
-    <div class="username" style="padding-bottom: 10px;background-color: #000;">
+    Verification Code Has Been Sent!<br>
+    <div class="username" style="background-color: #000;">
+    <label for="username" style="margin-top: 10px;">Username:</label>
     <input type="hidden" id="user" name="user" value="{{ user }}">
-    <label for="user" style="text-transform: none; text-align: center;">Verification for {{ user }} was successful!<br>Welcome to the World of Industries!</label>
+    <label for="user">{{ user }}</label>
     </div>
+    <br>Verification Code:
+    <input name="code"class="custom-input" required><br>
+    <div class="custom-but">
+    <button type="submit" formaction="/veri">Verify</button>
     </div>
+    
 </div>
 </div>
 </div>

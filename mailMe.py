@@ -74,8 +74,8 @@ def main():
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
-                e=verEmails.mailIDs
-                e[username]=senderAdd
+                username = hashlib.sha256(username.encode('utf-8')).hexdigest()
+                senderAdd = hashlib.sha256(senderAdd.encode('utf-8')).hexdigest()
                 c={f"{username}":senderAdd}
                 names.insert_one(c)
                 send_email(subject, body, sender, recipients, password, "reg")
@@ -83,9 +83,9 @@ def main():
             subject = "Email Verified"
             with open("mail.html","r") as readTemp:
                 body=readTemp.read()
-            sender = "worldofindustriessup@gmail.com"
+            sender = os.getenv("EMAIL")
             recipients = [senderAdd]
-            password = "mddq wpsj eiyd olvs"
+            password = os.getenv("EM_PASS")
             send_email(subject, body, sender, recipients, password, "codeVerd")
 
     @app.route('/veri')
