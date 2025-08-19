@@ -110,7 +110,7 @@ def main():
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            username=f.encrypt(user.encode('utf-8'))
+            username=f.encrypt(user.encode('utf-8')).decode()
             d=names.find_one({f"{username}": {'$exists': True}})
             mail=d[username]
             mail=f.decrypt(mail).decode('utf-8')
