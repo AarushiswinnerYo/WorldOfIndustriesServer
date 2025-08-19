@@ -125,7 +125,7 @@ def main():
             return render_template("veried.html", user=user)
         else:
             return "Code was wrong"
-    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10001)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
 
 def j():
     while True:
