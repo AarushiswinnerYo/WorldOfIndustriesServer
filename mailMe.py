@@ -51,7 +51,8 @@ def main():
             return redirect(url_for("veri", user=user))
 
     def send(senderAdd, username, typ):
-        global username
+        global usern
+        usern=username.lower()
         def send_email(subject, body, sender, recipients, password, typ):
             if typ=="reg":
                 msg = MIMEMultipart('alternative')
@@ -118,8 +119,8 @@ def main():
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            d=names.find_one({f"{username}": {'$exists': True}})
-            mail=f.decrypt(d[username]).decode('utf-8')
+            d=names.find_one({f"{usern}": {'$exists': True}})
+            mail=f.decrypt(d[usern]).decode('utf-8')
             send(mail, user, "codeVerd")
             user=user.title()
             return render_template("veried.html", user=user)
