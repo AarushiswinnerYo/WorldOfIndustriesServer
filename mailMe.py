@@ -81,8 +81,8 @@ def main():
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
-                username = f.encrypt(username.encode('utf-8'))
-                senderAdd = f.encrypt(senderAdd.encode('utf-8'))
+                username = f.encrypt(username.encode('utf-8')).decode()
+                senderAdd = f.encrypt(senderAdd.encode('utf-8')).decode()
                 c={f"{username}":"{senderAdd}"}
                 names.insert_one(c)
                 send_email(subject, body, sender, recipients, password, "reg")
