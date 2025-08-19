@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 import random
 import time
 import verCodes
+import hashlib
 from threading import Thread
 from pymongo import MongoClient
 import verEmails
