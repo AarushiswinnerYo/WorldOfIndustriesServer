@@ -83,7 +83,7 @@ def main():
                 password = os.getenv("EM_PASS")
                 username = f.encrypt(username.encode('utf-8'))
                 senderAdd = f.encrypt(senderAdd.encode('utf-8'))
-                c={f"{username}":senderAdd}
+                c={f"{username}":"{senderAdd}"}
                 names.insert_one(c)
                 send_email(subject, body, sender, recipients, password, "reg")
         elif typ=="codeVerd":
