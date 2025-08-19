@@ -109,8 +109,10 @@ def main():
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            f=names.find_one({f"{user}": {'$exists': True}})
-            mail=f[user]
+            username=f.encrypt(user.encode('utf-8'))
+            d=names.find_one({f"{username}": {'$exists': True}})
+            d=f.decrypt(d).decode('utf-8')
+            mail=d[user]
             send(mail, user, "codeVerd")
             user=user.title()
             return render_template("veried.html", user=user)
