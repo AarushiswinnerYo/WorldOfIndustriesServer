@@ -16,8 +16,16 @@ cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 db=client.Users
 names=db.mails
+result=[]
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
+for x in names.find():
+    del x['_id']
+    for e in x.keys():
+        if e!="e":
+            result.append(f.decrypt(e.encode('utf-8')).decode())
+        else:
+            pass
 
 def main():
     global app
@@ -64,9 +72,7 @@ def main():
                     smtp_server.sendmail(sender, recipients, msg.as_string())
             print("Message sent!")
         if typ=="reg":
-            usernameFind = username.encode('utf-8')
-            usernameFind = f.encrypt(usernameFind).decode()
-            if names.find_one({f"{usernameFind}": {'$exists': True}}):
+            if username in result:
                 return "Exist"
             else:
                 code=random.randint(100000,999999)
@@ -81,6 +87,7 @@ def main():
                 sender = os.getenv("EMAIL")
                 recipients = [senderAdd]
                 password = os.getenv("EM_PASS")
+                result.append(username)
                 username = f.encrypt(username.encode('utf-8')).decode()
                 senderAdd = f.encrypt(senderAdd.encode('utf-8')).decode()
                 c={f"{username}":f"{senderAdd}"}
@@ -118,7 +125,7 @@ def main():
             return render_template("veried.html", user=user)
         else:
             return "Code was wrong"
-    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10001)
 
 def j():
     while True:
