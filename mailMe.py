@@ -52,6 +52,7 @@ def main():
 
     def send(senderAdd, username, typ):
         def send_email(subject, body, sender, recipients, password, typ):
+            global username
             if typ=="reg":
                 msg = MIMEMultipart('alternative')
                 msg['Subject'] = subject
@@ -117,7 +118,6 @@ def main():
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            username=f.encrypt(user.encode('utf-8')).decode()
             d=names.find_one({f"{username}": {'$exists': True}})
             mail=f.decrypt(d[username]).decode('utf-8')
             send(mail, user, "codeVerd")
