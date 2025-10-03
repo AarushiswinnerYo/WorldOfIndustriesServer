@@ -23,6 +23,7 @@ app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
 def refreshList():
     global result
+    global correspondingEmails
     while True:
         l=[]
         r=[]
