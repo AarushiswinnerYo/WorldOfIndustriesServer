@@ -10,6 +10,7 @@ import hashlib
 from threading import Thread
 from pymongo import MongoClient
 import verEmails
+import requests
 import os
 
 cluster=os.getenv("MDB_CLUST")
@@ -17,20 +18,25 @@ client=MongoClient(cluster)
 db=client.Users
 names=db.mails
 result=[]
+br-api=os.getenv("BR_API")
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
 def refreshList():
     global result
     while True:
+        l=[]
         r=[]
         for x in names.find():
             del x['_id']
             for e in x.keys():
                 if e!="e":
+                    l.append(f.decrypt(x[e].encode('utf-8')).decode())
                     r.append(f.decrypt(e.encode('utf-8')).decode())
                 else:
                     pass
         result=r
+        correspondingEmails=l
+        print(correspondingEmails)
         time.sleep(1)
 
 def main():
