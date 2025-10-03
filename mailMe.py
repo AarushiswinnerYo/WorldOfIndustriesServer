@@ -36,7 +36,6 @@ def refreshList():
                     pass
         result=r
         correspondingEmails=l
-        print(correspondingEmails)
         time.sleep(1)
 
 def main():
@@ -59,6 +58,8 @@ def main():
         e=send(mail, user, "reg")
         if e=="Exist":
             return render_template("registerAgain.html", user=user)
+        if e=="Email Exist":
+            return render_template("registerAgainEmail.html", user=user)
         else:
             return redirect(url_for("veri", user=user))
 
@@ -87,6 +88,8 @@ def main():
         if typ=="reg":
             if username in result:
                 return "Exist"
+            elif senderAdd in correspondingEmails:
+                return "Email Exist"
             else:
                 code=random.randint(100000,999999)
                 x=verCodes.verPend
