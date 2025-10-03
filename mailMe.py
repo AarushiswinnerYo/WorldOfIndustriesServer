@@ -18,7 +18,7 @@ client=MongoClient(cluster)
 db=client.Users
 names=db.mails
 result=[]
-br-api=os.getenv("BR_API")
+br_api=os.getenv("BR_API")
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
 def refreshList():
