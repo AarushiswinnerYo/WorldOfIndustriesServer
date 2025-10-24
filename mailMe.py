@@ -20,7 +20,7 @@ names=db.mails
 dbCount=client.WebView
 counts=dbCount.Count
 result=[]
-br_api=os.getenv("BR_API")
+
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
 def refreshList():
