@@ -60,7 +60,7 @@ def main():
             writeCount.write(str(d))
         return redirect(red)
     @app.route('/ana')
-    def showCount()
+    def showCount():
         with open('counted.txt','r') as readCount:
             d= readCount.read()
         return d
