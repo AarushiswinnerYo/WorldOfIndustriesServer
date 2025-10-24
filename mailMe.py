@@ -49,6 +49,16 @@ def main():
     @app.route('/register')
     def my_form():
         return render_template('register.html')
+    @app.route('/new')
+    def count():
+        red=request.args.get('red')
+        with open('counted.txt', 'r') as readCount:
+            d= readCount.read()
+        d= int(d)
+        d+=1
+        with open("counted.txt", "w") as writeCount:
+            writeCount.write(str(d))
+        return redirect(red)
 
     @app.route('/register', methods=['POST'])
     def my_form_post():
