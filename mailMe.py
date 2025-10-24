@@ -17,6 +17,8 @@ cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 db=client.Users
 names=db.mails
+dbCount=client.WebView
+counts=dbCount.Count
 result=[]
 br_api=os.getenv("BR_API")
 app = Flask(__name__)
@@ -52,17 +54,18 @@ def main():
     @app.route('/new')
     def count():
         red=request.args.get('red')
-        with open('counted.txt', 'r') as readCount:
-            d= readCount.read()
-        d= int(d)
-        d+=1
-        with open("counted.txt", "w") as writeCount:
-            writeCount.write(str(d))
+        d=counts.find_one({"count":{'$exists': True}})
+        del d['_id']
+        q=d['count']
+        q+=1
+        d['count']=q
+        counts.delete_one({"count":{'$exists': True}})
+        counts.insert_one(d)
         return redirect(red)
     @app.route('/ana')
     def showCount():
-        with open('counted.txt','r') as readCount:
-            d= readCount.read()
+        d=counts.find_one({"count":{'$exists': True}})
+        del d['_id']
         return d
 
     @app.route('/register', methods=['POST'])
