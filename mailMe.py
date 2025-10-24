@@ -66,7 +66,7 @@ def main():
     def showCount():
         d=counts.find_one({"count":{'$exists': True}})
         del d['_id']
-        return d
+        return d['count']
 
     @app.route('/register', methods=['POST'])
     def my_form_post():
