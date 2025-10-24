@@ -59,6 +59,11 @@ def main():
         with open("counted.txt", "w") as writeCount:
             writeCount.write(str(d))
         return redirect(red)
+    @app.route('/ana')
+    def showCount()
+        with open('counted.txt','r') as readCount:
+            d= readCount.read()
+        return d
 
     @app.route('/register', methods=['POST'])
     def my_form_post():
