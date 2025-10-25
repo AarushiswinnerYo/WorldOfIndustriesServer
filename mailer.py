@@ -41,7 +41,7 @@ def send(code, typeOfMail, email, user):
      response = requests.post(url, json=payload, headers=headers)
 
      print(eval(response.text))
-     if "messageId" in eval(response).keys():
+     if "messageId" in eval(response.text).keys():
           return "Sent"
      else:
           return "Invalid Key"
