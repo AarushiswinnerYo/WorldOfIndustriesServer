@@ -70,7 +70,7 @@ def main():
         return f"{d['count']}"
     @app.route('/testing')
     def testingPage():
-        u=mailer.send(5693,"regCode", "aarushgaminga@gmail.com","Aarushiswinner Yo")
+        u=mailer.send(0,"regSuc", "aarushgaminga@gmail.com","Aarushiswinner Yo")
         return str(u)
 
     @app.route('/register', methods=['POST'])
