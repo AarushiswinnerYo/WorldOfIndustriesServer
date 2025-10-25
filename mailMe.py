@@ -12,6 +12,7 @@ from pymongo import MongoClient
 import verEmails
 import requests
 import os
+import mailer
 
 cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
@@ -67,6 +68,10 @@ def main():
         d=counts.find_one({"count":{'$exists': True}})
         del d['_id']
         return f"{d['count']}"
+    @app.route('/testing')
+    def testingPage():
+        u=mailer.send(5693,"regCode", "aarushgaminga@gmail.com","Aarushiswinner Yo")
+        return str(u)
 
     @app.route('/register', methods=['POST'])
     def my_form_post():
