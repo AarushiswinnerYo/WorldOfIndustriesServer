@@ -1,7 +1,7 @@
 import requests
-
+import os
 url = "https://api.brevo.com/v3/smtp/email"
-apiKey=os.environ.get("BR_API")
+apiKey=os.getenv("BR_API")
 
 def send(code, typeOfMail, email, user):
      if typeOfMail=="regCode":
