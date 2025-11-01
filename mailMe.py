@@ -70,9 +70,7 @@ def main():
         return f"{d['count']}"
     @app.route('/testing')
     def testingPage():
-        u=mailer.send(0,"regSuc", "aarushgaminga@gmail.com","Aarushiswinner Yo")
-        return str(u)
-
+        return render_template("test.html")
     @app.route('/register', methods=['POST'])
     def my_form_post():
         mail = request.form['email']
