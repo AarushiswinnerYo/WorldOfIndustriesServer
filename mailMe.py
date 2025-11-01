@@ -89,25 +89,11 @@ def main():
 
     def send(senderAdd, username, typ):
         global usern
-        def send_email(subject, body, sender, recipients, password, typ):
+        def send_email(recipients, username, typ, code=0):
             if typ=="reg":
-                msg = MIMEMultipart('alternative')
-                msg['Subject'] = subject
-                msg['From'] = sender
-                msg['To'] = ', '.join(recipients)
-                msg.attach(MIMEText(body, "html"))
-                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-                    smtp_server.login(sender, password)
-                    smtp_server.sendmail(sender, recipients, msg.as_string())
+                mailer.send("regCode", recipients, username, code)
             else:
-                msg = MIMEMultipart("alternative") 
-                msg['Subject'] = subject
-                msg['From'] = sender
-                msg['To'] = ', '.join(recipients)
-                msg.attach(MIMEText(body, "html"))
-                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-                    smtp_server.login(sender, password)
-                    smtp_server.sendmail(sender, recipients, msg.as_string())
+                mailer.send("regSuc", recipients, username)
             print("Message sent!")
         if typ=="reg":
             if username in result:
@@ -120,28 +106,16 @@ def main():
                 x[username.lower()]=code
                 with open("verCodes.py", "w") as writeVer:
                         writeVer.write(f"verPend={x}")
-                subject = "Email Verification"
-                with open("mailCode.html","r") as readTemp:
-                    body=readTemp.read()
-                body = body.replace("verCode", str(code))
-                sender = os.getenv("EMAIL")
-                recipients = [senderAdd]
-                password = os.getenv("EM_PASS")
+                recipients = senderAdd
                 result.append(username)
-                username = f.encrypt(username.encode('utf-8')).decode()
-                usern = username
+                usern = f.encrypt(username.encode('utf-8')).decode()
                 senderAdd = f.encrypt(senderAdd.encode('utf-8')).decode()
-                c={f"{username}":f"{senderAdd}"}
+                c={f"{usern}":f"{senderAdd}"}
                 names.insert_one(c)
-                send_email(subject, body, sender, recipients, password, "reg")
+                send_email(recipients, username, "reg", code)
         elif typ=="codeVerd":
-            subject = "Email Verified"
-            with open("mail.html","r") as readTemp:
-                body=readTemp.read()
-            sender = os.getenv("EMAIL")
-            recipients = [senderAdd]
-            password = os.getenv("EM_PASS")
-            send_email(subject, body, sender, recipients, password, "codeVerd")
+            recipients = senderAdd
+            send_email(recipients, username, "codeVerd")
 
     @app.route('/veri')
     def veri():

@@ -3,7 +3,7 @@ import os
 url = "https://api.brevo.com/v3/smtp/email"
 apiKey=os.getenv("BR_API")
 
-def send(code, typeOfMail, email, user):
+def send(typeOfMail, email, user, code=0):
      if typeOfMail=="regCode":
           sub="World of Industries Verification Code"
           with open("mailCode.html", 'r') as readBody:
@@ -44,4 +44,4 @@ def send(code, typeOfMail, email, user):
      if "messageId" in eval(response.text).keys():
           return "Sent"
      else:
-          return "Invalid Key"
+          return "Invalid"
