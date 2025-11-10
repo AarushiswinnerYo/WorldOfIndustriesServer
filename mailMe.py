@@ -60,7 +60,7 @@ def main():
     def count():
         red=request.args.get('red')
         t=request.args.get('t')
-        r=counts.find_one({t}:{"$exists":True})
+        r=counts.find_one({t:{"$exists":True}})
         d=counts.find_one({"count":{'$exists': True}})
         del d['_id']
         del r['_id']
