@@ -74,7 +74,7 @@ def main():
         counts.insert_one(d)
         counts.delete_one({t:{'$exists': True}})
         counts.insert_one(r)
-        return redirect(f"{red}?t={t})
+        return redirect(f"{red}?t={t}")
     @app.route('/ana')
     def showCount():
         d=counts.find_one({"count":{'$exists': True}})
