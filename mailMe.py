@@ -87,7 +87,7 @@ def main():
         d["main"]=q['main']
         q=counts.find_one({"winnerP":{'$exists': True}})
         d["winnerP"]=q['winnerP']
-        return d
+        return f"""<title>Analysis</title>{d}"""
     @app.route('/testing')
     def testingPage():
         return render_template("test.html")
