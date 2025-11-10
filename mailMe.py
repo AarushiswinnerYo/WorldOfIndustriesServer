@@ -77,16 +77,11 @@ def main():
         return redirect(f"{red}?t={t}")
     @app.route('/ana')
     def showCount():
-        d=counts.find_one({"count":{'$exists': True}})
-        del d['_id']
-        q=counts.find_one({"aarushiswinner":{'$exists': True}})
-        del q['_id']
-        d["aarushiswinner"]=q["aarushiswinner"]
-        q=counts.find_one({"main":{'$exists': True}})
-        del q['_id']
-        d["main"]=q['main']
-        q=counts.find_one({"winnerP":{'$exists': True}})
-        d["winnerP"]=q['winnerP']
+        d={}
+        for x in counts.find():
+            del x['_id']
+            for e in x.keys():
+                  d[e]=counts.find_one({e:{'$exists': True}})[e]
         return f"""<title>Analysis</title>{d}"""
     @app.route('/testing')
     def testingPage():
