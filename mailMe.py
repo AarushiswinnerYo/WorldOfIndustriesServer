@@ -59,13 +59,21 @@ def main():
     @app.route('/new')
     def count():
         red=request.args.get('red')
+        t=request.args.get('t')
+        r=counts.find_one({t}:{"$exists":True})
         d=counts.find_one({"count":{'$exists': True}})
         del d['_id']
+        del r['_id']
         q=d['count']
+        m=r[t]
+        m+=1
         q+=1
         d['count']=q
+        r[t]=m
         counts.delete_one({"count":{'$exists': True}})
         counts.insert_one(d)
+        counts.delete_one({t:{'$exists': True}})
+        counts.insert_one(r)
         return redirect(red)
     @app.route('/ana')
     def showCount():
