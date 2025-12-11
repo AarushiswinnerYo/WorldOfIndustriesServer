@@ -3,6 +3,7 @@ import threading
 import os
 import functions
 import mailMe
+import tokenGen as tg
 HEADER=64
 PORT=5555
 SERVER="0.0.0.0"
@@ -58,7 +59,7 @@ def handleClient(conn, addr):
                             conn.send("New Device Login Success!".encode(FORMAT))
                             print(f"\033[32mUser:-{x[1]} logged on\033[0m")
                     except:
-                        conn.send("Successfully logged in!".encode(FORMAT))
+                        conn.send(f"Successfully logged in!{functions.loginToken(x[1])}".encode(FORMAT))
                         print(f"\033[32mUser:-{x[1]} logged on\033[0m")
                     else:
                         pass
@@ -69,6 +70,14 @@ def handleClient(conn, addr):
                 elif loginRes=="incorrect!":
                     conn.send("Incorrect password".encode(FORMAT))
                     connected=False
+            elif x[0]=="LOGINTOKEN":
+                rhw=functions.tokenLogin(x[1])
+                if rhw=="Token not found!":
+                    conn.send("regToken".encode(FORMAT))
+                    connected=False
+                else:
+                    print(f"\033[32m{rhw} Joined the Chat! (Game that is...)\033[0m")
+                    conn.send(f"Successfully logged in!{rhw}".encode(FORMAT))
             elif x[0]=="user":
                 connectedUsers.append(x[1])
                 ipToUser[addr[0]]=x[1]
@@ -80,8 +89,6 @@ def handleClient(conn, addr):
                 try:
                     if x[1]=="inven":
                         inv=functions.showInv(f"{ipToUser[addr[0]]}")
-                        del inv['money']
-                        del inv['group']
                         conn.send(f"{inv}".encode(FORMAT))
                     elif x[1]=="lists":
                         listing=functions.listListings(x[3],x[2])
