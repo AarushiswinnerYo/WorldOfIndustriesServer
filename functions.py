@@ -39,6 +39,11 @@ def showInv(user):
     if profs.find_one({user: {'$exists': True}})!=None:
         l=profs.find_one({"_id":user},{"_id":0, user:0, 'money':0, 'group':0})
         return l
+
+def showMoney(user):
+    if profs.find_one({user: {"$exists":True}})!=None:
+        l=profs.find_one({"_id":user},{"_id":0, user:0, 'group':0})
+        return l
 def passChange(user,oldPasswd,newPasswd):
     r=profs.find_one({user: {'$exists': True}})
     if r!=None:

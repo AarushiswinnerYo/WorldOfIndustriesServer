@@ -76,12 +76,10 @@ def handleClient(conn, addr):
                     conn.send("regToken".encode(FORMAT))
                     connected=False
                 else:
-                    print(f"\033[32m{rhw} Joined the Chat! (Game that is...)\033[0m")
                     conn.send(f"Successfully logged in!{rhw}".encode(FORMAT))
             elif x[0]=="user":
                 connectedUsers.append(x[1])
                 ipToUser[addr[0]]=x[1]
-                print(f"\033[32m{x[1]} Joined the Chat! (Game that is...)\033[0m")
                 conn.send(f"Handshake Made with user:- {x[1]}".encode(FORMAT))
             elif x[0]=="buy":
                 conn.send("bought".encode(FORMAT))
@@ -93,6 +91,9 @@ def handleClient(conn, addr):
                     elif x[1]=="lists":
                         listing=functions.listListings(x[3],x[2])
                         conn.send(f"{listing}".encode(FORMAT))
+                    elif x[1]=="money":
+                        mon=functions.showMoney(f"{ipToUser[addr[0]]}")
+                        conn.send(f"{mon["money"]}".encode(FORMAT))
                 except IndexError:
                     conn.send("{}".encode(FORMAT))
                 else:
@@ -106,7 +107,6 @@ def handleClient(conn, addr):
                 conn.send(f"Disconnecting user...{ipToUser[addr[0]]}".encode(FORMAT))
                 print(f"\033[31m{ipToUser[addr[0]]} disconnected :(\033[0m")
             else:
-                print(f"\033[32m[{ipToUser[addr[0]]}] {msg}\033[0m")
                 conn.send(f"{msg} received".encode(FORMAT))
     conn.close()
 
