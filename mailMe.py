@@ -17,6 +17,7 @@ import mailer
 cluster=os.getenv("MDB_CLUST")
 client=MongoClient(cluster)
 db=client.Users
+usernames=db.names
 names=db.mails
 dbCount=client.WebView
 counts=dbCount.Count
@@ -138,6 +139,7 @@ def main():
     def veriPost():
         user=request.form['user']
         code=request.form["code"]
+        passwd=request.form["passwd"]
         user=user.lower()
         code=int(code)
         x=verCodes.verPend
@@ -148,6 +150,15 @@ def main():
             d=names.find_one({f"{usern}": {'$exists': True}})
             mail=f.decrypt(d[usern]).decode('utf-8')
             send(mail, user, "codeVerd")
+            c={"_id":f"{user}",f"{user}":passwd,
+           "wood":50,
+           "steel":{"type1":0, "type2":0, "type3":0},
+           "plants":{"cotton":0, "wool":0, "silk":0, "bamboo":0, "tomato":0, "onion":0},
+           "metal":{"iron":0, "tungsten":0, "copper":0},
+           "plastic":0,
+           "money":10000,
+           "group":"None"}
+            usernames.insert_one(c)
             user=user.title()
             return render_template("veried.html", user=user)
         else:
