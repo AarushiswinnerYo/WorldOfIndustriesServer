@@ -1,4 +1,5 @@
 flask
+uvicorn
 pymongo
 requests
 cryptography
