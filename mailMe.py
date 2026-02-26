@@ -91,7 +91,6 @@ def main():
     def my_form_post():
         mail = request.form['email']
         user=request.form['user']
-        user=user.lower()
         mail = mail.lower()
         e=send(mail, user, "reg")
         if e=="Exist":
@@ -117,7 +116,7 @@ def main():
             else:
                 code=random.randint(100000,999999)
                 x=verCodes.verPend
-                x[username.lower()]=code
+                x[username]=code
                 with open("verCodes.py", "w") as writeVer:
                         writeVer.write(f"verPend={x}")
                 recipients = senderAdd
@@ -140,7 +139,6 @@ def main():
         user=request.form['user']
         code=request.form["code"]
         passwd=request.form["passwd"]
-        user=user.lower()
         code=int(code)
         x=verCodes.verPend
         if x[user]==code:
