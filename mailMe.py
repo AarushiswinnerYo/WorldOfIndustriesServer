@@ -161,7 +161,9 @@ def main():
             return render_template("veried.html", user=user)
         else:
             return "Code was wrong"
-    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=10000)
+
+    port=os.environ.get("PORT")
+    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=port)
 
 def j():
     while True:
