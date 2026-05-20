@@ -162,8 +162,8 @@ def main():
         else:
             return "Code was wrong"
 
-    port=os.environ.get("PORT")
-    app.run(host="0.0.0.0", debug=True, use_reloader=False, port=port)
+    port=int(os.environ.get("PORT"))
+    app.run(host="0.0.0.0", debug=True, port=port)
 
 def j():
     while True:
@@ -171,7 +171,7 @@ def j():
         print(t["e"])
         time.sleep(20)
 
-if __name__ == "__main__":
+if __name__ != "__main__":
     t1=Thread(target=j)
     t1.start()
     t2=Thread(target=refreshList)
