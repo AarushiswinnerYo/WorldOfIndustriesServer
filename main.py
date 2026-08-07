@@ -112,7 +112,6 @@ def main():
                 mailer.send("regSuc", recipients, username)
             print("Message sent!")
         if typ=="reg":
-            print(result)
             if username in result:
                 return {"error": "Exist"}
             elif senderAdd in correspondingEmails:
