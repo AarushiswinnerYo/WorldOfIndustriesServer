@@ -17,7 +17,7 @@ def send(typeOfMail, email, user, code=0):
      payload = {
           "sender": {
                "name": "World of Industries Verification",
-               "email": "verify@worldofindustries.qzz.io"
+               "email": "verify@mail.woi.winnerworld.qzz.io"
       },
            "to": [
                 {
@@ -25,6 +25,9 @@ def send(typeOfMail, email, user, code=0):
                      "name": user
                 }
             ],
+            "params": {
+               "avatarUrl": "https://aarushiswinner.qzz.io/woiLogo.png"
+            },
             "replyTo": {
                  "email": "worldofindustriessup@gmail.com",
                  "name": "Support - World of Industries"
