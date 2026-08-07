@@ -148,14 +148,28 @@ def main():
             d=names.find_one({f"{usern}": {'$exists': True}})
             mail=f.decrypt(d[usern]).decode('utf-8')
             send(mail, user, "codeVerd")
-            c={"_id":f"{user}",f"{user}":passwd,
-           "wood":50,
-           "steel":{"type1":0, "type2":0, "type3":0},
-           "plants":{"cotton":0, "wool":0, "silk":0, "bamboo":0, "tomato":0, "onion":0},
-           "metal":{"iron":0, "tungsten":0, "copper":0},
-           "plastic":0,
-           "money":10000,
-           "group":"None"}
+            c={
+                "_id":f"{user}",f"{user}":passwd,
+                "wood":50,
+                "steel":{"type1":0, "type2":0, "type3":0},
+                "plants":{"cotton":0, "wool":0, "silk":0, "bamboo":0, "tomato":0, "onion":0},
+                "metal":{"iron":0, "tungsten":0, "copper":0},
+                "plastic":0,
+                "money":10000,
+                "group":"None",
+                "recipes":
+                {
+                    "logs":0,
+                    "utensils":0,
+                    "sheets":{
+                        'steel1':0,
+                        "steel2":0,
+                        'steel3':0
+                    }
+                },
+                'valuation': 10000,
+                'workers': 0
+            }
             usernames.insert_one(c)
             user=user.title()
             return render_template("veried.html", user=user)
