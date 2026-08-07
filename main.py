@@ -21,6 +21,7 @@ usernames=db.names
 names=db.mails
 dbCount=client.WebView
 counts=dbCount.Count
+temp=db.temp
 result=[]
 correspondingEmails=[]
 
@@ -95,12 +96,12 @@ def main():
         user=request.form['user']
         mail = mail.lower()
         e=send(mail, user, "reg")
-        if e=="Exist":
+        if e["error"]=="Exist":
             return render_template("registerAgain.html", user=user)
-        if e=="Email Exist":
+        if e["error"]=="Email Exist":
             return render_template("registerAgainEmail.html", user=user)
         else:
-            return redirect(url_for("veri", user=user))
+            return redirect(url_for("veri", enc=e["usern"], user=user))
 
     def send(senderAdd, username, typ):
         global usern
@@ -111,10 +112,11 @@ def main():
                 mailer.send("regSuc", recipients, username)
             print("Message sent!")
         if typ=="reg":
+            print(result)
             if username in result:
-                return "Exist"
+                return {"error": "Exist"}
             elif senderAdd in correspondingEmails:
-                return "Email Exist"
+                return {"error": "Email Exist"}
             else:
                 code=random.randint(100000,999999)
                 x=verCodes.verPend
@@ -126,15 +128,16 @@ def main():
                 usern = f.encrypt(username.encode('utf-8')).decode()
                 senderAdd = f.encrypt(senderAdd.encode('utf-8')).decode()
                 c={f"{usern}":f"{senderAdd}"}
-                names.insert_one(c)
+                temp.insert_one(c)
                 send_email(recipients, username, "reg", code)
+                return {'usern': usern, 'error': "None"}
         elif typ=="codeVerd":
             recipients = senderAdd
             send_email(recipients, username, "codeVerd")
 
     @app.route('/veri')
     def veri():
-        return render_template("veri.html", user=request.args.get('user'))
+        return render_template("veri.html", enc=request.args.get('enc'), user=request.args.get('user'))
     
     @app.route('/veri', methods=['POST'])
     def veriPost():
@@ -147,7 +150,7 @@ def main():
             del x[user]
             with open("verCodes.py", "w") as writeVer:
                 writeVer.write(f"verPend={x}")
-            d=names.find_one({f"{usern}": {'$exists': True}})
+            d=temp.find_one({f"{usern}": {'$exists': True}})
             mail=f.decrypt(d[usern]).decode('utf-8')
             send(mail, user, "codeVerd")
             c={
@@ -173,6 +176,8 @@ def main():
                 'workers': 0
             }
             usernames.insert_one(c)
+            names.insert_one(d)
+            temp.delete_one(d)
             user=user.title()
             return render_template("veried.html", user=user)
         else:
