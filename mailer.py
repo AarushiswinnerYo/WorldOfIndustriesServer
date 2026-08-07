@@ -25,9 +25,6 @@ def send(typeOfMail, email, user, code=0):
                      "name": user
                 }
             ],
-            "params": {
-               "avatarUrl": "https://aarushiswinner.qzz.io/woiLogo.png"
-            },
             "replyTo": {
                  "email": "worldofindustriessup@gmail.com",
                  "name": "Support - World of Industries"
