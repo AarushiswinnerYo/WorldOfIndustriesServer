@@ -22,6 +22,8 @@ names=db.mails
 dbCount=client.WebView
 counts=dbCount.Count
 result=[]
+correspondingEmails=[]
+
 
 app = Flask(__name__)
 f=Fernet(os.getenv("FERNET_KEY").encode())
