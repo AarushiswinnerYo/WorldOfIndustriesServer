@@ -171,7 +171,16 @@ def main():
                         'steel3':0
                     }
                 },
-                'valuation': 10000,
+                'valuations': {
+                    "January":10000,
+                    "February":10000,
+                    "March":10000,
+                    "April":10000,
+                    "May":10000,
+                    "June":10000,
+                    "July":10000,
+                    "August":10000,
+                },
                 'workers': 0
             }
             usernames.insert_one(c)
