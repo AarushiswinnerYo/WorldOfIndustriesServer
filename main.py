@@ -156,7 +156,7 @@ def main():
                 "_id":f"{user}",f"{user}":passwd,
                 "wood":50,
                 "steel":{"type1":0, "type2":0, "type3":0},
-                "plants":{"cotton":0, "wool":0, "silk":0, "bamboo":0, "tomato":0, "onion":0},
+                "consumables":{"cotton":0, "wool":0, "silk":0, "bamboo":0, "tomato":0, "onion":0},
                 "metal":{"iron":0, "tungsten":0, "copper":0},
                 "plastic":0,
                 "money":10000,
